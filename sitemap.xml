@@ -123,14 +123,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/xctf-pwn/</loc>
+    <loc>http://example.com/tags/pwntools/</loc>
     <lastmod>2022-01-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/pwntools/</loc>
+    <loc>http://example.com/tags/xctf-pwn/</loc>
     <lastmod>2022-01-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
