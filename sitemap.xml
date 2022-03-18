@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/</loc>
+    
+    <lastmod>2022-03-18</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2022/03/18/buuctf-ez-pz-hackover-2016/</loc>
     
     <lastmod>2022-03-18</lastmod>

