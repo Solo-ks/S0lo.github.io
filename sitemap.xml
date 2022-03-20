@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2022/03/20/buuctf-hitcontraining-uaf/</loc>
+    
+    <lastmod>2022-03-20</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2022/03/18/buuctf-wustctf2020-getshell/</loc>
     
     <lastmod>2022-03-18</lastmod>
@@ -200,7 +207,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -208,35 +215,35 @@
   
   <url>
     <loc>http://example.com/tags/buuctf-pwn/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwn-canary/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwntools/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/xctf-pwn/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwn/</loc>
-    <lastmod>2022-03-18</lastmod>
+    <lastmod>2022-03-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
