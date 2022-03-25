@@ -256,14 +256,14 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/pwn/</loc>
+    <loc>http://example.com/tags/xctf-pwn/</loc>
     <lastmod>2022-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/xctf-pwn/</loc>
+    <loc>http://example.com/tags/pwn/</loc>
     <lastmod>2022-03-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
