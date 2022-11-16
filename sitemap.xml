@@ -235,7 +235,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -243,35 +243,35 @@
   
   <url>
     <loc>http://example.com/tags/buuctf-pwn/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwn-canary/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwntools/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/xctf-pwn/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/pwn/</loc>
-    <lastmod>2022-03-28</lastmod>
+    <lastmod>2022-11-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
